@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 600 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="Dark-on-Light" serif:id="Dark on Light" transform="matrix(1.18182,0,0,1.28571,-149.091,-34.2857)">
+        <path d="M600,370C600,364.481 595.125,360 589.121,360L170.879,360C164.875,360 160,364.481 160,370L160,390C160,395.519 164.875,400 170.879,400L589.121,400C595.125,400 600,395.519 600,390L600,370Z" style="fill:rgb(26,26,26);"/>
+        <g transform="matrix(0.818182,0,0,1,69.0909,-120)">
+            <path d="M600,370C600,364.481 594.042,360 586.703,360L173.297,360C165.958,360 160,364.481 160,370L160,390C160,395.519 165.958,400 173.297,400L586.703,400C594.042,400 600,395.519 600,390L600,370Z" style="fill:rgb(84,84,84);"/>
+        </g>
+        <g transform="matrix(0.636364,0,0,1,138.182,-240)">
+            <path d="M600,370C600,364.481 592.34,360 582.904,360L177.096,360C167.66,360 160,364.481 160,370L160,390C160,395.519 167.66,400 177.096,400L582.904,400C592.34,400 600,395.519 600,390L600,370Z" style="fill:rgb(135,135,135);"/>
+        </g>
+    </g>
+</svg>
