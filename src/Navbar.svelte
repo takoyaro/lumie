@@ -1,15 +1,17 @@
 <script>
-    import {menuIndex} from './store.js';
+    import {menuIndex,scheme} from './store.js';
     import cssVars from 'svelte-css-vars';
 
     export let styleVars;
 
     </script>
-    
-    <nav use:cssVars={styleVars}>
-        <li class:active={$menuIndex==0} on:click={()=>{menuIndex.set(0);console.log($menuIndex)}}>LUMIE</li>
-        <li class:active={$menuIndex==1} on:click={()=>{menuIndex.set(1);console.log($menuIndex)}}>Preview</li>
-    </nav>
+
+    <div use:cssVars={styleVars}>
+        <nav class="{$scheme}">
+            <li class:active={$menuIndex==0} on:click={()=>{menuIndex.set(0);console.log($menuIndex)}}>LUMIE</li>
+            <li class:active={$menuIndex==1} on:click={()=>{menuIndex.set(1);console.log($menuIndex)}}>Preview</li>
+        </nav>
+    </div>
     
     <style>
         nav{
@@ -18,6 +20,10 @@
             justify-content: center;
             display: flex;
             align-items: center;
+            position: fixed;
+            background-color: white;
+            z-index: 1;
+            box-shadow: 0 5px 5px rgba(0,0,0,0.1);
         }
         nav li{
             padding:0px 15px;
@@ -46,5 +52,9 @@
             font-size:1.4em;
             transition:300ms;
             box-shadow: inset 0 -5px var(--brighter);
+        }
+        nav.dark{
+            background-color:var(--darkest);
+            color:var(--primary);
         }
     </style>

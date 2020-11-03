@@ -27,7 +27,7 @@
         <div class="btn is-right" class:darker={$scheme=='dark'} class:darkest={$scheme=='light'} on:click={()=>{showSaveModal.set(true)}}><i><Icon name="cloud"/></i>Save</div>
     </div>
     <div class="row credits">
-        <span class="has-bg-darkerDarker has-text-brightest">Built with ❤️ and <Icon name="svelte"/> <a class="has-text-bold" href="https://svelte.dev">Svelte</a> in 🇯🇵 by Jimmy Fitzback</span>
+        <span class="has-bg-darkerDarker has-text-brightest">Built with ❤️ and <Icon name="svelte"/> <a class="has-text-bold" href="https://svelte.dev">Svelte</a> in 🇯🇵 by <a class="primary" href="https://github.com/takoyaro">@takoyaro</a></span>
     </div>
 </footer>
 
@@ -83,6 +83,12 @@
     }
     a:visited{
         color:#ff3e00; /* Svelte Color*/
+    }
+    a.primary{
+        color:var(--primary);
+    }
+    a.primary:visited{
+        color:var(--primaryDarker);
     }
     .has-text-bold{
         font-weight:600;

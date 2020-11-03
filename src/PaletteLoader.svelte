@@ -1,6 +1,6 @@
 <script>
     import Icon from './Icon.svelte';
-    import {algo,rgb,alts,palette,scheme,savedPalettes,showPaletteLoader,GenerateTakoColors,gradients,GenerateUnifiedColors,GenerateTakoColors2,GenerateShadesColor} from './store.js';
+    import {algo,rgb,alts,palette,scheme,savedPalettes,showPaletteLoader,GenerateTakoColors,gradients,GenerateUnifiedColors,GenerateTakoColors2,GenerateShadesColor,GenerateNeonColors} from './store.js';
     import * as ColorLib from 'color';
     const Color = ColorLib.default;
     import {afterUpdate, onMount} from 'svelte';
@@ -20,11 +20,14 @@
         if(paletteAlgo=="unified"){
             return GenerateUnifiedColors(primary);
         }
-        if(paletteAlgo=="tako"){
+        if(paletteAlgo=="lumie"){
             return GenerateTakoColors2(primary);
         }
         if(paletteAlgo=="shades"){
             return GenerateShadesColor(primary);
+        }
+        if(paletteAlgo=="neon"){
+            return GenerateNeonColors(primary);
         }
     }
 
@@ -54,44 +57,52 @@
 {#if $showPaletteLoader==true}
 <div class="paletteLoader" style="height: calc(100vh - {footerHeight}px);">
     <div class="container">
-        {#each $savedPalettes as palette}
-        <div class="row singlePalette">
-            <div class="column">
-                <div class="row">
-                    <div class="column is-one-fifth" style="display:flex"><h1 style="background: linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.primaryDarker).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.primary).string()} 0%, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.primaryBrighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.darker).string()} 100%);">{palette.name}</h1></div>
-                    <div class="column is-1" style="display:flex" on:click={()=>{LoadPalette(palette)}}><Icon name="download"/></div>
-                    <div class="column is-1" style="display:flex" on:click={()=>{deletePalette(palette.name);}}><Icon name="trash"/></div>
-                </div>
-                <div class="row align-right">
-                    <div class="column is-2 colorSwatch" style="
-                    background: linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darkest).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.brightestBrighter).string()} 0%, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darkestDarker).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.brighter).string()} 100%);
-        
-                    ">
-                        <div class="row"><div class="column"><h2 style="background: -webkit-linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.brighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.darker).string()}, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.brightest).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.darkest).string()});">{($scheme=='dark') ? 'DARK' : 'LIGHT'}</h2></div></div>
-                        <div class="row full-height">
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].darkest).string()}"></div>
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].darker).string()}"></div>
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].primary).string()}"></div>
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].brighter).string()}"></div>
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].brightest).string()}"></div>
-                        </div>
+        {#if $savedPalettes}
+            {#each $savedPalettes as palette}
+            <div class="row singlePalette">
+                <div class="column">
+                    <div class="row">
+                        <div class="column is-one-fifth" style="display:flex"><h1 style="background: linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.primaryDarker).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.primary).string()} 0%, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.primaryBrighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.darker).string()} 100%);">{palette.name}</h1></div>
+                        <div class="column is-1" style="display:flex" on:click={()=>{LoadPalette(palette)}}><Icon name="download"/></div>
+                        <div class="column is-1" style="display:flex" on:click={()=>{deletePalette(palette.name);}}><Icon name="trash"/></div>
                     </div>
-                    <div class="column is-2 colorSwatch" style="
-                    background: linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).light.brightestBrighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darkest).string()} 0%, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).light.brightestBrighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darkest).string()} 100%);
-                    ">
-                        <div class="row"><div class="column"><h2 style="background: -webkit-linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).light.primaryBrighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).dark.brighter).string()}, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).light.darkest).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darker).string()});">{($scheme=='dark') ? 'LIGHT' : 'DARK'}</h2></div></div>
-                        <div class="row full-height">
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].darkest).string()}"></div>
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].darker).string()}"></div>
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].primary).string()}"></div>
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].brighter).string()}"></div>
-                            <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].brightest).string()}"></div>
+                    <div class="row align-right">
+                        <div class="column is-2 colorSwatch" style="
+                        background: linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darkest).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.brightestBrighter).string()} 0%, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darkestDarker).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.brighter).string()} 100%);
+            
+                        ">
+                            <div class="row"><div class="column"><h2 style="background: -webkit-linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.brighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.darker).string()}, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).dark.brightest).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).light.darkest).string()});">{($scheme=='dark') ? 'DARK' : 'LIGHT'}</h2></div></div>
+                            <div class="row full-height">
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].darkest).string()}"></div>
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].darker).string()}"></div>
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].primary).string()}"></div>
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].brighter).string()}"></div>
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[0]].brightest).string()}"></div>
+                            </div>
+                        </div>
+                        <div class="column is-2 colorSwatch" style="
+                        background: linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).light.brightestBrighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darkest).string()} 0%, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).light.brightestBrighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darkest).string()} 100%);
+                        ">
+                            <div class="row"><div class="column"><h2 style="background: -webkit-linear-gradient(315deg, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).light.primaryBrighter).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).dark.brighter).string()}, {($scheme=='dark') ? Color.rgb(uniquePalette(palette.algo,palette.primary).light.darkest).string() : Color.rgb(uniquePalette(palette.algo,palette.primary).dark.darker).string()});">{($scheme=='dark') ? 'LIGHT' : 'DARK'}</h2></div></div>
+                            <div class="row full-height">
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].darkest).string()}"></div>
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].darker).string()}"></div>
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].primary).string()}"></div>
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].brighter).string()}"></div>
+                                <div class="column colorBlock" style="background-color:{Color.rgb(uniquePalette(palette.algo,palette.primary)[currentScheme[1]].brightest).string()}"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {/each}
+            {/each}
+            {:else}
+                <div class="row">
+                    <div class="column">
+                        <h2 style="background: linear-gradient(315deg, {($scheme=='dark') ? Color.rgb($alts.dark.primaryDarker).string() : Color.rgb($alts.light.primary).string()} 0%, {($scheme=='dark') ? Color.rgb($alts.dark.primaryBrighter).string() : Color.rgb($alts.light.darker).string()} 100%);">You have no saved palettes.</h2>
+                    </div>
+                </div>
+            {/if}
     </div>
 </div>
 {/if}

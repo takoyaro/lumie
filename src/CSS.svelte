@@ -6,7 +6,7 @@
     export let vars;
     export let theme;
     import {afterUpdate, onMount} from 'svelte';
-    import {scheme, palette,alts} from './store';
+    import {scheme, palette,alts,gradients} from './store';
     
     let themeArr = ($scheme=='dark') ? ['dark','light'] : ['light','dark'];
     $: CSS = (theme=="main") ? `
@@ -17,6 +17,13 @@
             --tertiary: ${Color.rgb($palette[themeArr[0]].brightest).string()};
             --darker: ${Color.rgb($palette[themeArr[0]].darker).string()};
             --darkest: ${Color.rgb($palette[themeArr[0]].darkest).string()};
+
+            /* Gradients */
+            --gradientPrimary:   ${$gradients[themeArr[0]].primary};
+            --gradientSecondary: ${$gradients[themeArr[0]].brighter};
+            --gradientTertiary:  ${$gradients[themeArr[0]].brightest};
+            --gradientDarker:    ${$gradients[themeArr[0]].darker};
+            --gradientDarkest:   ${$gradients[themeArr[0]].darkest};
         }
     }
     ` :
@@ -28,6 +35,13 @@
             --tertiary: ${Color.rgb($palette[themeArr[1]].brightest).string()};
             --darker: ${Color.rgb($palette[themeArr[1]].darker).string()};
             --darkest: ${Color.rgb($palette[themeArr[1]].darkest).string()};
+
+            /* Gradients */
+            --gradientPrimary:   ${$gradients[themeArr[1]].primary};
+            --gradientSecondary: ${$gradients[themeArr[1]].brighter};
+            --gradientTertiary:  ${$gradients[themeArr[1]].brightest};
+            --gradientDarker:    ${$gradients[themeArr[1]].darker};
+            --gradientDarkest:   ${$gradients[themeArr[1]].darkest};
         }
     }
     `;
@@ -38,10 +52,34 @@
     onMount(()=>{
         PrismHTML = Prism.highlight(CSS,Prism.languages.css);
     })
+
+    let isCopied = false;
+    let isError = false;
+    function copyToClipboard(){
+        navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
+            if (result.state === 'granted') {
+                const type = 'text/plain';
+                const blob = new Blob([CSS], { type });
+                let data = [new ClipboardItem({ [type]: blob })];
+                navigator.clipboard.write(data).then(function() {
+                    isCopied = true;
+                    setTimeout(()=>{
+                        isCopied = false;
+                    },1000)
+                }, function() {
+                    isError = true;
+                    setTimeout(()=>{
+                        isError = false;
+                    },1000)
+                });
+            }
+        });
+    }
 </script>
 
 {#if Object.keys(vars).length}
 <div use:cssVars={vars}>
+    <div class="btn copy {$scheme}" on:click={copyToClipboard}>{#if !isCopied && !isError}Copy to clipboard{/if}{#if isCopied}Copied to clipboard!{/if}{#if isError}Error with clipboard!{/if}</div>
     <pre class='language-css'><code class='language-css'>
         {@html PrismHTML}
     </code></pre>
@@ -296,5 +334,15 @@
         .token.entity {
             cursor: help;
         }
+    }
+    .btn{
+        display:flex;
+        flex-direction: row-reverse;
+        cursor:pointer;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+    }
+    .btn.dark{
+        color:var(--primary);
     }
 </style>

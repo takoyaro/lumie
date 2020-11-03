@@ -107,7 +107,7 @@
 	}
 	.palette{
 		display:flex;
-		height:100%;
+		height:101%;
 		padding:0 20%;
 	}
 	.colorBox{

@@ -28,10 +28,9 @@
 	
 	let hueSlider,saturationSlider,brightnessSlider;
 	onMount(()=>{
-		//updateHSL();
+		updateHSL();
 	});
 	afterUpdate(()=>{
-		console.log(primaryHSL);
 	});
 	
 	function saturate(e){
@@ -42,6 +41,9 @@
 		const finalColor = ColorLib.default.hsl(finalHSL).rgb().array();
 		console.log(finalColor);
 		rgb.set(finalColor);
+		updateSaturation();
+		updateBrightness();
+		updateHue();
 	}
 	function illuminate(e){
 		let luminosity = parseFloat(brightnessSlider.value);
@@ -50,6 +52,9 @@
 		let finalHSL = [hue,saturation,luminosity];
 		const finalColor = ColorLib.default.hsl(finalHSL).rgb().array();
 		rgb.set(finalColor);
+		updateSaturation();
+		updateBrightness();
+		updateHue();
 	}
 	function rotate(e){
 		let hue = parseFloat(hueSlider.value);
@@ -58,6 +63,9 @@
 		let finalHSL = [hue,saturation,luminosity];
 		const finalColor = ColorLib.default.hsl(finalHSL).rgb().array();
 		rgb.set(finalColor);
+		updateSaturation();
+		updateBrightness();
+		updateHue();
 	}
 	function updateSaturation(){
 		saturation.set(ColorLib.default.rgb($alts[$scheme].primary).hsl().array()[1]);
@@ -69,10 +77,10 @@
 		hue.set(ColorLib.default.rgb($alts[$scheme].primary).hsl().array()[0]);
 	}
 	function updateHSL(){
+		rgb.set([$alts[$scheme].primary[0],$alts[$scheme].primary[1],$alts[$scheme].primary[2]]);
 		updateSaturation();
 		updateBrightness();
 		updateHue();
-		rgb.set([$alts[$scheme].primary[0],$alts[$scheme].primary[1],$alts[$scheme].primary[2]]);
 	}
 </script>
 <div use:cssVars="{styleVars}">

@@ -2,34 +2,37 @@ import { writable,derived, readable } from 'svelte/store';
 import * as ColorLib from 'color';
 const Color = ColorLib.default;
 
-export const randomPrimaryColor = (algo="tako")=>{
-    if(algo=="tako") return Math.floor(Math.random() * (230 - 150 + 1)) + 150;
-    if(algo="unified") return Math.floor(Math.random() * (200 - 150 + 1)) + 150;
-    if(algo="shades") return Math.floor(Math.random() * (120 - 150 + 1)) + 150;
+export const randomPrimaryColor = (algo="lumie")=>{
+    if(algo=="lumie") return Math.floor(Math.random() * (230 - 150 + 1)) + 150;
+    if(algo=="unified" || algo=="neon") return Math.floor(Math.random() * (200 - 150 + 1)) + 150;
+    if(algo=="shades") return Math.floor(Math.random() * (120 - 150 + 1)) + 150;
 }
 let newRGB = [randomPrimaryColor(),randomPrimaryColor(),randomPrimaryColor()];
 export const showSaveModal = writable(false);
 export const showPaletteLoader = writable(false);
 export const savedPalettes = writable([]);
 export const menuIndex = writable(1);
-export const rgb = writable([156, 211, 159]);
+export const rgb = writable([152, 155, 181]);
 export const saturation = writable(0);
 export const brightness = writable(0);
 export const hue = writable(0);
 export const alts = writable({})
 export const config = writable({});
 export const scheme = writable("light");
-export const algo = writable("unified");
-export const algolist = readable(["tako","unified","shades"]);
+export const algo = writable("lumie");
+export const algolist = readable(["lumie","unified","shades","neon"]);
 export const palette = derived([rgb,algo],([$rgb,$algo])=>{
     if($algo=="unified"){
         return GenerateUnifiedColors($rgb);
     }
-    if($algo=="tako"){
-        return GenerateTakoColors2($rgb);
+    if($algo=="lumie"){
+        return GenerateTakoColors($rgb);
     }
     if($algo=="shades"){
         return GenerateShadesColor($rgb);
+    }
+    if($algo=="neon"){
+        return GenerateNeonColors($rgb);
     }
 });
 export const gradients = derived(palette,($palette)=>{
@@ -172,6 +175,36 @@ export function GenerateTakoColors(primary){
             brighterBrighter:Color.rgb(primary).darken(0.2).desaturate(0.2).rotate(180*1.618).rgb().array(),
             brightest:Color.rgb(primary).lighten(0.4).desaturate(0.8).rotate(270*1.618).rgb().array(),
             brightestBrighter:Color.rgb(primary).lighten(0.5).desaturate(0.8).rotate(270*1.618).rgb().array()
+        }
+    }
+}
+export function GenerateNeonColors(primary){
+    return {
+        dark:{
+            primary:Color.rgb(primary).saturationl(75).rgb().array(),
+            primaryBrighter:Color(Color.rgb(primary).saturationl(75)).lighten(0.2).rgb().array(),
+            primaryDarker:Color(Color.rgb(primary).saturationl(75)).darken(0.2).rgb().array(),
+            darkest:Color(Color.rgb(primary).saturationl(75)).darken(0.5).desaturate(0.6).rotate(332*1.618).rgb().array(),
+            darkestDarker:Color(Color.rgb(primary).saturationl(75)).darken(0.65).desaturate(0.6).rotate(332*1.618).rgb().array(),
+            darker:Color(Color.rgb(primary).saturationl(75)).darken(0.3).desaturate(0.4).rotate(150).rgb().array(),
+            darkerDarker:Color(Color.rgb(primary).saturationl(75)).darken(0.45).desaturate(0.4).rotate(150).rgb().array(),
+            brighter:Color(Color.rgb(primary).saturationl(75)).lighten(0.1).saturate(0.5).rotate(180*1.618).rgb().array(),
+            brighterBrighter:Color(Color.rgb(primary).saturationl(75)).lighten(0.15).saturate(0.5).rotate(180*1.618).rgb().array(),
+            brightest:Color(Color.rgb(primary).saturationl(75)).saturate(0.8).rotate(270*1.618).rgb().array(),
+            brightestBrighter:Color(Color.rgb(primary).saturationl(75)).lighten(0.25).saturate(0.8).rotate(270*1.618).rgb().array()
+        },
+        light:{
+            primary:Color.rgb(primary).saturationl(75).rgb().array(),
+            primaryBrighter:Color(Color.rgb(primary).saturationl(75)).lighten(0.2).rgb().array(),
+            primaryDarker:Color(Color.rgb(primary).saturationl(75)).darken(0.2).rgb().array(),
+            darkest:Color(Color.rgb(primary).saturationl(75)).darken(0.5).desaturate(0.4).rotate(332*1.618).rgb().array(),
+            darkestDarker:Color(Color.rgb(primary).saturationl(75)).darken(0.65).desaturate(0.4).rotate(332*1.618).rgb().array(),
+            darker:Color(Color.rgb(primary).saturationl(75)).darken(0.3).desaturate(0.3).rotate(150).rgb().array(),
+            darkerDarker:Color(Color.rgb(primary).saturationl(75)).darken(0.45).desaturate(0.3).rotate(150).rgb().array(),
+            brighter:Color(Color.rgb(primary).saturationl(75)).lighten(0.1).desaturate(0.3).rotate(180*1.618).rgb().array(),
+            brighterBrighter:Color(Color.rgb(primary).saturationl(75)).lighten(0.15).desaturate(0.3).rotate(180*1.618).rgb().array(),
+            brightest:Color(Color.rgb(primary).saturationl(75)).lighten(0.2).desaturate(0.4).rotate(270*1.618).rgb().array(),
+            brightestBrighter:Color(Color.rgb(primary).saturationl(75)).lighten(0.25).desaturate(0.4).rotate(270*1.618).rgb().array()
         }
     }
 }

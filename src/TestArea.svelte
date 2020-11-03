@@ -44,14 +44,14 @@
                     <span class="has-text-primary">LUMIE</span> is a palette tool for people who have no idea what they're doing or simply looking for inspiration, with a simple and intuitive interface. It provides you with instant feedback in a nice and clean way as well as CSS code on the fly. <span class:has-text-brighter={$scheme=="dark"} class:has-text-darkest={$scheme=="light"}> As a matter of fact, the page you're currently reading is using a randomly generated palette.</span> Click LUMIE in the navbar to edit this palette.
                 </h3>
                 <div class="row">
-                    <div class="column is-align-right"><a class="btn primary is-large" on:click={()=>{document.getElementById('LumieXtras').scrollIntoView({ behavior: 'smooth' });}}>Read More<i><Icon name="readme"/></i></a></div>
-                    <div class="column is-align-left"><a class="btn brighter is-large" on:click={randomize}><i><Icon name="dice"/></i>Randomize</a></div>
+                    <div class="column is-align-right"><a class="btn primary is-large" on:click={()=>{document.getElementById('LumieXtras').scrollIntoView({ behavior: 'smooth' });}}>See More<i><Icon name="readme"/></i></a></div>
+                    <div class="column is-align-left"><a class="btn brighter is-large" on:click={()=>{document.getElementById('css').scrollIntoView({ behavior: 'smooth' });}}><i><Icon name="code"/></i>GET CSS</a></div>
                 </div>
 
             </div>
         </div>
         <section id="LumieXtras" style="">
-            <h1 class="uppercase has-text-primary">{$scheme} THEME</h1>
+            <h1 class="uppercase {$scheme} has-text-primary">{$scheme} THEME</h1>
             <div class="row is-mobile">
             {#each colors as color}
                 <div class="column is-one-fifth">
@@ -88,25 +88,8 @@
                 </div>
             {/each}
             </div>
-            <h1 class="uppercase opposite has-text-darker" >{($scheme=="dark") ? "LIGHT" : "DARK"} THEME</h1>
+            <h1 class="uppercase {($scheme=="dark") ? "light" : "dark"} has-text-darker" >{($scheme=="dark") ? "LIGHT" : "DARK"} THEME</h1>
         </section>
-        <h1 style="margin-top:1em;">CSS</h1>
-        <div class="row" style="padding:1em;">
-            <div class="column is-half has-text-centered">
-                <h3 class="has-text-brighter has-text-bold">{($scheme=="dark") ? "DARK" : "LIGHT"}</h3>
-            </div>
-            <div class="column is-half has-text-centered">
-                <h3 class="has-text-brighter has-text-bold">{($scheme=="dark") ? "LIGHT" : "DARK"}</h3>
-            </div>
-        </div>
-        <div class="row" style="padding:1em;">
-            <div class="column is-half" style="margin:1em 0 1em 1em;">
-                <CSS vars={styleVars} theme="main"/>
-            </div>
-            <div class="column is-half" style="margin:1em 0 1em 1em;">
-                <CSS vars={styleVars} theme="opposite"/>
-            </div>
-        </div>
         <section>
             <h1>Gradients</h1>
             <div class="row is-mobile">
@@ -126,6 +109,25 @@
                         </div>
                     </div>
                 {/each}
+            </div>
+        </section>
+        <section id="css">
+            <h1 style="margin-top:1em;">CSS</h1>
+            <div class="row" style="padding:1em;">
+                <div class="column is-half has-text-centered">
+                    <h3 class="has-text-brighter has-text-bold">{($scheme=="dark") ? "DARK" : "LIGHT"}</h3>
+                </div>
+                <div class="column is-half has-text-centered">
+                    <h3 class="has-text-brighter has-text-bold">{($scheme=="dark") ? "LIGHT" : "DARK"}</h3>
+                </div>
+            </div>
+            <div class="row" style="padding:2em;">
+                <div class="column is-half" style="margin:1em 1em 1em -.5em;">
+                    <CSS vars={styleVars} theme="main"/>
+                </div>
+                <div class="column is-half" style="margin:1em 4em 1em 0em;">
+                    <CSS vars={styleVars} theme="opposite"/>
+                </div>
             </div>
         </section>
 	</div>
@@ -158,6 +160,12 @@
 		font-weight:200;
 		margin-bottom:5px;
 	}
+    section h1.dark{
+        color:var(--primary);
+    }
+    section h1.light{
+        color:var(--darker);
+    }
 	h2{
         font-size:1.5em;
 		font-weight:300;

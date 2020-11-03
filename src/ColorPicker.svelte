@@ -24,12 +24,12 @@
             footerHeight = document.getElementById('footer').getBoundingClientRect().height;
         }
 	})
-	let noSat = ['unified','shades'];
+	let noSat = ['unified','shades','neon'];
 	let noLight = ['unified'];
 	let noRGB = ['shades','unified'];
 </script>
 
-<div class="container" style="height: calc(100% - {footerHeight}px);">
+<div class="container" style="height: 100%;">
 	{#if main}
 		{#if !noRGB.includes($algo)}
 			<div class="sliderRow">
