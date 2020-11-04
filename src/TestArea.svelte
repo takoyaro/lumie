@@ -41,7 +41,7 @@
             </h2>
             <div class="box">
                 <h3 class:has-text-brightest={$scheme=="dark"} class:has-text-darker={$scheme=="light"}>
-                    <span class="has-text-primary">LUMIE</span> is a palette tool for people who have no idea what they're doing or simply looking for inspiration, with a simple and intuitive interface. It provides you with instant feedback in a nice and clean way as well as CSS code on the fly. <span class:has-text-brighter={$scheme=="dark"} class:has-text-darkest={$scheme=="light"}> As a matter of fact, the page you're currently reading is using a randomly generated palette.</span> Click LUMIE in the navbar to edit this palette.
+                    <span class="has-text-primary">LUMIE</span> is a random palette/color scheme generator for people who have no idea what they're doing or simply looking for inspiration, with a simple and intuitive interface. It provides you with instant feedback in a nice and clean way as well as CSS code on the fly. <span class:has-text-brighter={$scheme=="dark"} class:has-text-darkest={$scheme=="light"}> As a matter of fact, the page you're currently reading is using a randomly generated palette.</span> Click LUMIE in the navbar to edit this palette.
                 </h3>
                 <div class="row">
                     <div class="column is-align-right"><a class="btn primary is-large" on:click={()=>{document.getElementById('LumieXtras').scrollIntoView({ behavior: 'smooth' });}}>See More<i><Icon name="readme"/></i></a></div>
